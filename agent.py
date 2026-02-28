@@ -14,6 +14,20 @@ logging.getLogger("ddgs").setLevel(logging.ERROR)
 logging.getLogger("curl_cffi").setLevel(logging.ERROR)
 
 
+# -------------------- Ensure .env Exists --------------------
+ENV_PATH = ".env"
+
+def ensure_env():
+    if not os.path.exists(ENV_PATH):
+        print("⚠️ .env not found. Creating with default values...")
+        with open(ENV_PATH, "w", encoding="utf-8") as f:
+            f.write(
+                "OLLAMA_API_KEY=\n"
+                "OLLAMA_MINIMAX_MODEL=minimax-m2.5:cloud\n"
+                "OLLAMA_GPT_MODEL=gpt-oss:20b-cloud\n"
+            )
+
+
 # -------------------- Validate API --------------------
 def validate_api_key(api_key: str) -> bool:
     summarizer_model = os.getenv("OLLAMA_GPT_MODEL", "")
@@ -68,36 +82,42 @@ def validate_api_key(api_key: str) -> bool:
 
 
 def check_api_key():
-    env_path = ".env"
+    ensure_env()          # اطمینان از وجود .env
     load_dotenv()
 
-    api_key = os.getenv("OLLAMA_API_KEY")
-
-    if api_key:
-        print("🔎 Validating existing API key...")
-        if validate_api_key(api_key):
-            return
-        else:
-            print("⚠️ Stored API key invalid.\n")
-
-    print("Enter your Ollama API Key (https://ollama.com/)\n")
-
     while True:
+        api_key = os.getenv("OLLAMA_API_KEY")
+
+        if api_key:
+            print("🔎 Validating existing API key...")
+            if validate_api_key(api_key):
+                break
+            else:
+                print("⚠️ Stored API key invalid.\n")
+                # پاک کردن کلید اشتباه از ENV
+                set_key(ENV_PATH, "OLLAMA_API_KEY", "")
+
+        # اگر key وجود نداشت یا invalid بود
+        print("Enter your Ollama API Key (https://ollama.com/)\n")
         api_key_input = input("OLLAMA_API_KEY: ").strip()
 
         if not api_key_input:
             print("❌ No API key provided. Exiting.")
             exit()
 
+        # ذخیره در .env و در env فعلی
+        set_key(ENV_PATH, "OLLAMA_API_KEY", api_key_input)
+        os.environ["OLLAMA_API_KEY"] = api_key_input
+
+        # دوباره validate کنیم
         if validate_api_key(api_key_input):
-            set_key(env_path, "OLLAMA_API_KEY", api_key_input)
-            os.environ["OLLAMA_API_KEY"] = api_key_input
-            print("✅ API key saved.\n")
+            print("✅ API key saved and verified.\n")
             break
         else:
             print("⚠️ Invalid API key. Try again.\n")
-
-
+            # پاک کردن کلید اشتباه و loop ادامه پیدا کنه
+            set_key(ENV_PATH, "OLLAMA_API_KEY", "")
+            
 # -------------------- Interactive Menus --------------------
 
 def choose_language():
@@ -222,6 +242,7 @@ def summarize_agent(text, retries=3, delay=2):
 
 
 def translator_agent(text, target_language, retries=3, delay=2):
+    language_display = target_language.capitalize()
     print(f"🌐 Translating to {language_display}")
     if target_language == "english":
         return text
