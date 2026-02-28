@@ -49,17 +49,9 @@ pip install ollama ddgs questionary python-dotenv httpx python-docx reportlab ar
 
 ---
 
-## 🔑 Environment Configuration
+## 🔑 API Key
 
-Create a `.env` file in the root directory:
-
-OLLAMA_API_KEY=your_api_key_here  
-OLLAMA_GPT_MODEL=gpt-oss:20b-cloud  
-OLLAMA_MINIMAX_MODEL=minimax-m2.5:cloud  
-
-If `.env` does not exist, the program will prompt you for an API key and create it automatically.
-
-Get your API key from:  
+Get your API key from:
 https://ollama.com/
 
 ---
