@@ -1,0 +1,9 @@
+ollama
+ddgs
+questionary
+python-dotenv
+httpx
+python-docx
+reportlab
+arabic-reshaper
+python-bidi
