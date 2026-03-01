@@ -60,13 +60,14 @@ https://ollama.com/
 
 Run the program:
 
-python main.py  
+python agent.py  
 
 Then:
 
-1. Enter a topic to research  
-2. Choose target language  
-3. Choose output format  
+1. Enter an API
+2. Enter a topic to research  
+3. Choose target language  
+4. Choose output format  
 
 The tool will:
 
