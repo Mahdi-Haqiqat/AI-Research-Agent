@@ -52,7 +52,7 @@ pip install ollama ddgs questionary python-dotenv httpx python-docx reportlab ar
 ## 🔑 API Key
 
 Get your API key from:
-https://ollama.com/
+[Ollama](https://ollama.com/)
 
 ---
 
@@ -111,7 +111,7 @@ PDF output supports RTL languages (Persian, Arabic, Turkish).
 
 ## ⚠️ Important Notes
 
-- PDF generation requires `DejaVuSans.ttf` in the project root directory.
+- PDF generation requires [`DejaVuSans.ttf`](https://github.com/Mahdi-Haqiqat/AI-Research-Agent/blob/main/DejaVuSans.ttf) in the project root directory.
 - Internet connection is required.
 - Ollama Cloud models must be accessible in your account.
 - Ensure model names in `.env` are correct.
