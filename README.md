@@ -47,6 +47,7 @@ Or install manually:
 
 pip install ollama ddgs questionary python-dotenv httpx python-docx reportlab arabic-reshaper python-bidi  
 
+Note: If you want to install on mobile read [Mobile Installation](https://docs.google.com/document/d/1bDfO-2dRdam6HHqPnYnGtFQyHfOT8r6YC0CY-pFJDJc/edit?usp=sharing)
 ---
 
 ## 🔑 API Key
