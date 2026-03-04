@@ -1,8 +1,8 @@
 ollama
-ddgs
-questionary
 python-dotenv
+ddgs
 httpx
+questionary
 python-docx
 reportlab
 arabic-reshaper
