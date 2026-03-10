@@ -38,9 +38,13 @@ def main():
 
     output_format = choose_format()
     
-    output_dir = os.path.join("Research")
-    os.makedirs(output_dir, exist_ok=True)
+    # -------------------- Termux-aware Research path --------------------
+    if "com.termux" in os.environ.get("PREFIX", ""):
+        output_dir = "/storage/emulated/0/Download/Research"
+    else:
+        output_dir = os.path.join("Research")
 
+    os.makedirs(output_dir, exist_ok=True)
 
     try:
         search_results = search_agent(topic)
