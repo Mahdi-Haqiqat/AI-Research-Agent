@@ -1,5 +1,7 @@
 # 🧠 AI Research CLI Agent
 
+[![PyPI](https://img.shields.io/badge/-PyPI-blue.svg?logo=pypi&labelColor=555555&style=for-the-badge)](https://pypi.org/project/ai-research-agent "PyPI")
+
 A powerful command-line research assistant built with Ollama Cloud API.  
 It searches the web, summarizes results using AI, translates the content, and exports it into multiple file formats.
 
