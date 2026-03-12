@@ -1,5 +1,6 @@
 import os
 import logging
+import argparse
 from ollama import Client
 from datetime import datetime
 
@@ -13,12 +14,42 @@ from helpers.api import validate_api_key, check_api_key
 from helpers.env import ensure_env
 from helpers.output_settings import choose_language, choose_format
 
+__version__ = "1.0.1"
+
 logging.getLogger("ddgs").setLevel(logging.ERROR)
 logging.getLogger("curl_cffi").setLevel(logging.ERROR)
 
+
 # -------------------- Main --------------------
 def main():
-    ensure_env()       
+
+    parser = argparse.ArgumentParser(description="AI Research Agent")
+
+    parser.add_argument(
+        "topic",
+        nargs="*",
+        help="Topic to research"
+    )
+
+    parser.add_argument(
+        "--language",
+        help="Output language"
+    )
+
+    parser.add_argument(
+        "--format",
+        help="Output format"
+    )
+
+    parser.add_argument(
+        "--version",
+        action="version",
+        version=f"AI-Research-Agent {__version__}"
+    )
+
+    args = parser.parse_args()
+
+    ensure_env()
     check_api_key()
 
     global Summarizer_MODEL, Translator_MODEL, client
@@ -31,14 +62,31 @@ def main():
         headers={"Authorization": f"Bearer {os.getenv('OLLAMA_API_KEY')}"}
     )
 
-    topic = input("Enter a topic to research: ").strip()
+    # -------- topic --------
 
-    target_language = choose_language()
+    if args.topic:
+        topic = " ".join(args.topic)
+    else:
+        topic = input("Enter a topic to research: ").strip()
+
+    # -------- language --------
+
+    if args.language:
+        target_language = args.language
+    else:
+        target_language = choose_language()
+
     language_display = target_language.capitalize()
 
-    output_format = choose_format()
-    
-    # -------------------- Termux-aware Research path --------------------
+    # -------- format --------
+
+    if args.format:
+        output_format = args.format
+    else:
+        output_format = choose_format()
+
+    # -------- output path --------
+
     if "com.termux" in os.environ.get("PREFIX", ""):
         output_dir = "/storage/emulated/0/Download/Research"
     else:
@@ -47,19 +95,39 @@ def main():
     os.makedirs(output_dir, exist_ok=True)
 
     try:
-        search_results = search_agent(topic)
-        summary = summarize_agent(client, Summarizer_MODEL, search_results)
-        translated = translator_agent(client, Translator_MODEL, summary, target_language)
 
-        filename = os.path.join(output_dir, f"{topic} {language_display}.{output_format}")
-        writer_agent(translated, filename, topic, target_language, output_format)
-        
+        search_results = search_agent(topic)
+
+        summary = summarize_agent(client, Summarizer_MODEL, search_results)
+
+        translated = translator_agent(
+            client,
+            Translator_MODEL,
+            summary,
+            target_language
+        )
+
+        filename = os.path.join(
+            output_dir,
+            f"{topic} {language_display}.{output_format}"
+        )
+
+        writer_agent(
+            translated,
+            filename,
+            topic,
+            target_language,
+            output_format
+        )
+
         log_agent(topic, language_display, output_format, "Success", filename)
 
         print(f"\n🎉 Done! Saved as {filename}")
 
     except Exception as e:
+
         log_agent(topic, language_display, output_format, "Failed", "", e)
+
         print(f"\n❌ Error: {e}")
 
 
