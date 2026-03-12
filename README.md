@@ -1,6 +1,10 @@
 # 🧠 AI Research CLI Agent
 
-[![PyPI](https://img.shields.io/badge/-PyPI-blue.svg?logo=pypi&labelColor=555555&style=for-the-badge)](https://pypi.org/project/ai-research-agent "PyPI")
+[![PyPI](https://img.shields.io/pypi/v/ai-research-agent?logo=pypi&style=for-the-badge)](https://pypi.org/project/ai-research-agent)
+[![Python](https://img.shields.io/pypi/pyversions/ai-research-agent?logo=python&style=for-the-badge)](https://pypi.org/project/ai-research-agent)
+[![Downloads](https://img.shields.io/pypi/dm/ai-research-agent?logo=pypi&style=for-the-badge)](https://pypi.org/project/ai-research-agent)
+[![License](https://img.shields.io/github/license/Mahdi-Haqiqat/AI-Research-Agent?style=for-the-badge)](https://github.com/Mahdi-Haqiqat/AI-Research-Agent/blob/main/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Mahdi-Haqiqat/AI-Research-Agent?logo=github&style=for-the-badge)](https://github.com/Mahdi-Haqiqat/AI-Research-Agent)
 
 A powerful command-line research assistant built with Ollama Cloud API.  
 It searches the web, summarizes results using AI, translates the content, and exports it into multiple file formats.
