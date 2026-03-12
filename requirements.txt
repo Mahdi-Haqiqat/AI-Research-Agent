@@ -6,4 +6,5 @@ questionary
 python-docx
 reportlab
 arabic-reshaper
+argparse
 python-bidi
