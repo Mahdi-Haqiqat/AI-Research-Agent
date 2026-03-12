@@ -68,7 +68,7 @@ Get your API key from:
 
 Run the program:
 
-python agent.py  
+python main.py  
 
 Then:
 
@@ -76,6 +76,26 @@ Then:
 2. Enter a topic to research  
 3. Choose target language  
 4. Choose output format  
+
+Or:
+
+Interactive mode (prompts for topic, language, and format)
+
+- Provide topic only:
+
+python main.py ChatGPT
+
+- Provide topic + language:
+
+python main.py ChatGPT --language persian
+
+- Provide topic + language + format:
+
+python main.py ChatGPT --language persian --format docx
+
+- Check version:
+
+python main.py --version
 
 The tool will:
 
