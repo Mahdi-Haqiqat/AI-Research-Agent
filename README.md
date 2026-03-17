@@ -1,4 +1,4 @@
-# 🧠 AI Research CLI Agent
+# 🔬 AI Research CLI Agent
 
 [![PyPI](https://img.shields.io/pypi/v/ai-research-agent?logo=pypi&style=for-the-badge)](https://pypi.org/project/ai-research-agent)
 [![Python](https://img.shields.io/pypi/pyversions/ai-research-agent?logo=python&style=for-the-badge)](https://pypi.org/project/ai-research-agent)
