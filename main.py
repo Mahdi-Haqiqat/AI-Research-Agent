@@ -19,6 +19,25 @@ __version__ = "1.0.1"
 logging.getLogger("ddgs").setLevel(logging.ERROR)
 logging.getLogger("curl_cffi").setLevel(logging.ERROR)
 
+CONFIG_FILE = "config_output_path.txt"  # مسیر ذخیره مسیر خروجی
+
+
+def save_output_path(path):
+    """Save output path to file"""
+    with open(CONFIG_FILE, "w") as f:
+        f.write(path)
+    print(f"✅ New Output Saved: {path}")
+
+
+def load_output_path(default_path):
+    """Load saved output path if exists"""
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r") as f:
+            saved_path = f.read().strip()
+            if saved_path:
+                return saved_path
+    return default_path
+
 
 # -------------------- Main --------------------
 def main():
@@ -41,6 +60,14 @@ def main():
         help="Output format"
     )
 
+    # -------- Change output path ----------
+    parser.add_argument(
+        "-c",
+        "--change",
+        help="Change output directory",
+        metavar="OUTPUT_PATH"
+    )
+
     parser.add_argument(
         "--version",
         action="version",
@@ -48,6 +75,13 @@ def main():
     )
 
     args = parser.parse_args()
+
+    # --------- اگر change زده شد، فقط مسیر ذخیره شود و برنامه ادامه نده ---------
+    if args.change:
+        output_dir = args.change
+        os.makedirs(output_dir, exist_ok=True)
+        save_output_path(output_dir)
+        return  # برنامه اصلی اجرا نمیشه
 
     ensure_env()
     check_api_key()
@@ -63,35 +97,26 @@ def main():
     )
 
     # -------- topic --------
-
     if args.topic:
         topic = " ".join(args.topic)
     else:
         topic = input("Enter a topic to research: ").strip()
 
     # -------- language --------
-
-    if args.language:
-        target_language = args.language
-    else:
-        target_language = choose_language()
-
+    target_language = args.language or choose_language()
     language_display = target_language.capitalize()
 
     # -------- format --------
-
-    if args.format:
-        output_format = args.format
-    else:
-        output_format = choose_format()
+    output_format = args.format or choose_format()
 
     # -------- output path --------
-
     if "com.termux" in os.environ.get("PREFIX", ""):
-        output_dir = "/storage/emulated/0/Download/Research"
+        default_output_dir = "/storage/emulated/0/Download/Research"
     else:
-        output_dir = os.path.join("Research")
+        default_output_dir = os.path.join("Research")
 
+    # load previous saved path
+    output_dir = load_output_path(default_output_dir)
     os.makedirs(output_dir, exist_ok=True)
 
     try:
@@ -100,25 +125,11 @@ def main():
 
         summary = summarize_agent(client, Summarizer_MODEL, search_results)
 
-        translated = translator_agent(
-            client,
-            Translator_MODEL,
-            summary,
-            target_language
-        )
+        translated = translator_agent(client, Translator_MODEL, summary, target_language)
 
-        filename = os.path.join(
-            output_dir,
-            f"{topic} {language_display}.{output_format}"
-        )
+        filename = os.path.join(output_dir, f"{topic} {language_display}.{output_format}")
 
-        writer_agent(
-            translated,
-            filename,
-            topic,
-            target_language,
-            output_format
-        )
+        writer_agent(translated, filename, topic, target_language, output_format)
 
         log_agent(topic, language_display, output_format, "Success", filename)
 
