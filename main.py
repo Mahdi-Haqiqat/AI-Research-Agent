@@ -51,11 +51,13 @@ def main():
     )
 
     parser.add_argument(
+        "-l",
         "--language",
         help="Output language"
     )
 
     parser.add_argument(
+        "-f",
         "--format",
         help="Output format"
     )
@@ -69,6 +71,7 @@ def main():
     )
 
     parser.add_argument(
+        "-v",
         "--version",
         action="version",
         version=f"AI-Research-Agent {__version__}"
