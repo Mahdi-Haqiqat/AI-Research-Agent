@@ -23,39 +23,51 @@ It searches the web, summarizes results using AI, translates the content, and ex
 
 ---
 
-## 🛠 Tech Stack
-
-Python 3.10+  
-ollama  
-ddgs  
-questionary  
-python-dotenv  
-httpx  
-python-docx  
-reportlab  
-arabic-reshaper  
-python-bidi  
-
 ---
 
 ## 📦 Installation
 
 Clone the repository:
 
+```bash
 git clone https://github.com/Mahdi-Haqiqat/AI-Research-Agent.git  
 cd AI-Research-Agent
+```
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt  
+```
 
 Or install manually:
 
+```bash
 pip install ollama ddgs questionary python-dotenv httpx python-docx reportlab arabic-reshaper python-bidi  
+```
 
 Note: If you want to install on mobile read [Mobile Installation](https://docs.google.com/document/d/1bDfO-2dRdam6HHqPnYnGtFQyHfOT8r6YC0CY-pFJDJc/edit?usp=sharing)
 
 ---
+
+## ⚙️ Requirements
+
+* 🐍 Python 3.9+
+* 🌐 Internet connection
+
+### 📚 Python dependencies:
+
+```  
+ollama
+ddgs
+questionary
+python-dotenv
+httpx
+python-docx
+reportlab
+arabic-reshaper
+python-bidi  
+```
 
 ## 🔑 API Key
 
@@ -68,7 +80,9 @@ Get your API key from:
 
 Run the program:
 
+```bash
 python main.py  
+```
 
 Then:
 
@@ -79,23 +93,33 @@ Then:
 
 Or:
 
-Interactive mode (prompts for topic, language, and format)
+## Interactive mode (prompts for topic, language, and format)
 
-- Provide topic only:
+usage: ai-research [-h] [-l LANGUAGE] [-f FORMAT] [-v] [-c OUTPUT_PATH] [topic ...]
 
-python main.py ChatGPT
+🔬 AI Research Agent - Automated research using AI
 
-- Provide topic + language:
+positional arguments:
 
-python main.py ChatGPT --language persian
+  topic                 Topic to research
 
-- Provide topic + language + format:
+options:
 
-python main.py ChatGPT --language persian --format docx
+  -h, --help            show this help message and exit
 
-- Check version:
+  -l, --language LANGUAGE			Output language (example: persian, english)
+  
+  -f, --format FORMAT  		 Output format (txt, md, docx, pdf)
+  
+  -v, --version         show program's version number and exit
+  
+  -c, --change OUTPUT_PATH 			Change output directory
 
-python main.py --version
+e.g,:
+
+```bash
+python main.py Github -l english -f docx
+```
 
 The tool will:
 
@@ -124,6 +148,7 @@ Each topic generates its own log file containing:
 
 ## 🌍 Supported Languages
 
+```
 English  
 Persian  
 French  
@@ -132,6 +157,7 @@ Arabic
 Spanish  
 Italian  
 Turkish  
+```
 
 PDF output supports RTL languages (Persian, Arabic, Turkish).
 
@@ -158,4 +184,4 @@ log_agent() → Execution logging
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](https://github.com/Mahdi-Haqiqat/AI-Research-Agent/tree/main?tab=MIT-1-ov-file) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/Mahdi-Haqiqat/AI-Research-Agent/blob/main/LICENSE) file for details.
