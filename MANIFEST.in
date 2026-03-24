@@ -1,1 +1,5 @@
-include ai_research_agent/DejaVuSans.ttf
+include LICENSE
+include README.md
+
+recursive-include ai_research_agent *.ttf
+recursive-include ai_research_agent *.env
