@@ -12,6 +12,6 @@ def ensure_env():
         with open(ENV_PATH, "w", encoding="utf-8") as f:
             f.write(
                 "OLLAMA_API_KEY=\n"
-                "OLLAMA_MINIMAX_MODEL=minimax-m2.5:cloud\n"
-                "OLLAMA_GPT_MODEL=gpt-oss:20b-cloud\n"
+                "OLLAMA_MINIMAX_MODEL=gemma3:27b-cloud\n"
+                "OLLAMA_GPT_MODEL=qwen3.5:397b-cloud\n"
             )
